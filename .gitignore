@@ -1,0 +1,3 @@
+# .gitignore
+# Dependências de Node
+/node_modules

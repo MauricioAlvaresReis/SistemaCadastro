@@ -43,13 +43,18 @@ const db = new sqlite3.Database('./data.db', (err) => {
 // ROTAS DE AUTENTICAÇÃO (LOGIN E CADASTRO DE USUÁRIO)
 app.post('/api/auth/register', async (req, res) => {
     const { username, email, password } = req.body;
-    
+    const normalizedEmail = (email || '').toLowerCase().trim();
+
+    if (!normalizedEmail || !password) {
+        return res.status(400).json({ error: 'Email e senha são obrigatórios.' });
+    }
+
     try {
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         const sql = 'INSERT INTO User (username, email, password) VALUES (?, ?, ?)';
-        
-        db.run(sql, [username, email, hashedPassword], function(err) {
+
+        db.run(sql, [username, normalizedEmail, hashedPassword], function(err) {
             if (err) {
                 return res.status(400).json({ error: 'Erro ao cadastrar usuário. Tente outro username/email.' });
             }
@@ -62,23 +67,29 @@ app.post('/api/auth/register', async (req, res) => {
 
 // Rota de Login
 app.post('/api/auth/login', (req, res) => {
-    const { username, password } = req.body;
-    const sql = 'SELECT * FROM User WHERE username = ?';
+    const { email, password } = req.body;
+    const normalizedEmail = (email || '').toLowerCase().trim();
 
-    db.get(sql, [username], async (err, row) => {
+    if (!normalizedEmail || !password) {
+        return res.status(400).json({ error: 'Email e senha são obrigatórios.' });
+    }
+
+    const sql = 'SELECT * FROM User WHERE email = ?';
+
+    db.get(sql, [normalizedEmail], async (err, row) => {
         if (err) {
             return res.status(500).json({ error: 'Erro no servidor.' });
         }
         if (!row) {
-            return res.status(401).json({ error: 'Nome de usuário ou senha inválidos.' });
+            return res.status(401).json({ error: 'Email ou senha inválidos.' });
         }
         try {
             const match = await bcrypt.compare(password, row.password);
 
             if (match) {
-                res.json({ message: 'Login bem-sucedido!', user: { id: row.id, username: row.username } });
+                res.json({ message: 'Login bem-sucedido!', user: { id: row.id, email: row.email } });
             } else {
-                res.status(401).json({ error: 'Nome de usuário ou senha inválidos.' });
+                res.status(401).json({ error: 'Email ou senha inválidos.' });
             }
         } catch (error) {
             res.status(500).json({ error: 'Erro na comparação de senha.' });

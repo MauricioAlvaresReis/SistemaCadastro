@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const username = document.getElementById('loginUsername').value;
+        const username = document.getElementById('loginEmail').value;
         const password = document.getElementById('loginPassword').value;
 
         loginMessage.textContent = 'Autenticando...';
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify({ email, password })
             });
 
             const data = await response.json();

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="login-page">
+    <div class="container">
+        
+        <div id="loginSection"> 
+            <h2>Login no Sistema</h2>
+            <form id="loginForm">
+                <input type="text" id="loginUsername" placeholder="Nome de Usuário" required>
+                <input type="password" id="loginPassword" placeholder="Senha" required>
+                <button type="submit">Entrar</button>
+            </form>
+            <p class="message" id="loginMessage"></p>
+            <p>Não tem uma conta? <a href="#" id="showRegister">Cadastre-se aqui</a></p>
+        </div>
+
+        <div id="registerSection" class="hidden-section"> 
+            <h3>Novo Cadastro de Usuário</h3>
+            <form id="registerForm">
+                <input type="text" id="regUsername" placeholder="Nome de Usuário" required>
+                <input type="email" id="regEmail" placeholder="E-mail" required>
+                <input type="password" id="regPassword" placeholder="Senha" required>
+                <button type="submit">Cadastrar</button>
+            </form>
+        <p class="message" id="registerMessage"></p>
+            <p>
+                <a href="#" id="showLogin" class="btn-back">Voltar ao Login</a>
+            </p>
+        </div>
+    </div>
+    <script src="auth.js"></script> 
+</body>
+</html>

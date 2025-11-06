@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body id="dashboard-page">
+    <div class="sidebar">
+        <h2>Menu de cadastro</h2>
+        <p>Logado como: <strong id="usernameDisplay"></strong></p>
+        <a href="#products-crud" class="menu-item active" data-target="products-crud">📦 Produtos</a>
+        <a href="#clients-crud" class="menu-item" data-target="clients-crud">👤 Clientes</a>
+        <div class="sidebar-footer">
+            <button id="logoutButton" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Sair</button>
+            <p class="system-info">Sistema de cadastro - 2025</p>
+        </div>
+    </div>
+
+    <div class="content">
+        <h1>Bem-vindo ao Sistema!</h1>
+
+        <section id="products-crud" class="crud-section active">
+            <h3>Gerenciamento de Produtos</h3>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                <input type="text" id="productName" placeholder="Nome do Produto" required>
+                <input type="text" id="productDescription" placeholder="Descrição">
+                <input type="number" id="productPrice" step="0.01" placeholder="Preço" required>
+                <button type="submit" id="productSubmitBtn">Cadastrar Produto</button>
+                <button type="button" id="productCancelBtn" style="display:none;">Cancelar Edição</button>
+            </form>
+            <h4>Lista de Produtos</h4>
+            <table id="productsTable">
+                <thead>
+                    <tr><th>ID</th><th>Nome</th><th>Preço</th><th>Ações</th></tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </section>
+
+        <section id="clients-crud" class="crud-section" style="display:none;">
+            <h3>Gerenciamento de Clientes</h3>
+            <form id="clientForm">
+                <input type="hidden" id="clientId">
+                <input type="text" id="clientName" placeholder="Nome do Cliente" required>
+                <input type="text" id="clientPhone" placeholder="Telefone">
+                <input type="email" id="clientEmail" placeholder="E-mail" required>
+                <button type="submit" id="clientSubmitBtn">Cadastrar Cliente</button>
+                <button type="button" id="clientCancelBtn" style="display:none;">Cancelar Edição</button>
+            </form>
+            <h4>Lista de Clientes</h4>
+            <table id="clientsTable">
+                <thead>
+                    <tr><th>ID</th><th>Nome</th><th>E-mail</th><th>Ações</th></tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </section>
+
+    </div>
+    <script src="crud.js"></script>
+</body>
+</html>
